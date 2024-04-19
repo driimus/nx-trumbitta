@@ -1,0 +1,7 @@
+{
+  "name": "@driimus/nx-plugin-openapi-e2e",
+  "private": true,
+  "description": "",
+  "scripts": {},
+  "devDependencies": {}
+}

@@ -1,4 +1,4 @@
-import { ExecutorContext, logger } from '@nrwl/devkit';
+import { ExecutorContext, logger } from '@nx/devkit';
 import { spawn } from 'cross-spawn';
 import { mkdirSync } from 'fs';
 import { deleteOutputDir } from '../../utils/delete-output-dir';
@@ -8,7 +8,7 @@ export default async function runExecutor(
   options: GenerateApiLibSourcesExecutorSchema,
   context: ExecutorContext,
 ): Promise<{ success: boolean }> {
-  const outputDir = context.workspace.projects[context.projectName].sourceRoot;
+  const outputDir = context.workspace!.projects[context.projectName!].sourceRoot!;
   const root = context.root;
 
   logger.info(`Deleting outputDir ${outputDir}...`);
@@ -20,12 +20,12 @@ export default async function runExecutor(
   await generateSources(
     options.useDockerBuild ?? false,
     options.sourceSpecPathOrUrl,
-    options.sourceSpecUrlAuthorizationHeaders,
+    options.sourceSpecUrlAuthorizationHeaders ?? '',
     options.generator,
-    options.additionalProperties,
-    options.globalProperties,
-    options.typeMappings,
-    options.silent,
+    options.additionalProperties ?? '',
+    options.globalProperties ?? '',
+    options.typeMappings ?? '',
+    options.silent ?? true,
     outputDir,
   );
 

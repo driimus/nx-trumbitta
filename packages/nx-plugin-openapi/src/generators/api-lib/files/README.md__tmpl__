@@ -25,10 +25,10 @@ You can have multiple libs like this one, and configure them to use different Op
 
 ```sh
 # Create a lib preconfigured to generate a TypeScript SDK based on Axios
-nx generate @trumbitta/nx-plugin-openapi:api-lib api-axios --generator typescript-axios
+nx generate @driimus/nx-plugin-openapi:api-lib api-axios --generator typescript-axios
 
 # Create a lib preconfigured to generate HTML docs
-nx generate @trumbitta/nx-plugin-openapi:api-lib api-docs --generator html
+nx generate @driimus/nx-plugin-openapi:api-lib api-docs --generator html
 
 # Generate or update the TypeScript SDK based on Axios
 nx run api-axios:generate-sources

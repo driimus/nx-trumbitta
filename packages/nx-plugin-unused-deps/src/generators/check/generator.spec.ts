@@ -1,6 +1,6 @@
-import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
-import { Tree, addDependenciesToPackageJson, logger } from '@nrwl/devkit';
-import * as devkit from '@nrwl/devkit';
+import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
+import { Tree, addDependenciesToPackageJson, logger } from '@nx/devkit';
+import * as devkit from '@nx/devkit';
 
 import generator from './generator';
 
@@ -13,15 +13,15 @@ describe('check generator', () => {
 
   beforeEach(() => {
     appTree = createTreeWithEmptyWorkspace(2);
-    addDependenciesToPackageJson(appTree, { react: 'latest' }, { jest: 'latest' });
+    addDependenciesToPackageJson(appTree, { react: 'latest' }, { vitest: 'latest' });
   });
 
   it('should log to console with no options', async () => {
     const options: CheckGeneratorSchema = {};
-    const spy = jest.spyOn(logger, 'log');
+    const spy = vitest.spyOn(logger, 'log');
     const mockPackageJsonDeps: PackageJsonDeps = {
       dependencies: ['react'],
-      devDependencies: ['jest'],
+      devDependencies: ['vitest'],
     };
 
     await generator(appTree, options);
@@ -31,7 +31,7 @@ describe('check generator', () => {
 
   it('should log to file when requested', async () => {
     const options: CheckGeneratorSchema = { json: true };
-    const spy = jest.spyOn(devkit, 'writeJsonFile').mockImplementation(() => null);
+    const spy = vitest.spyOn(devkit, 'writeJsonFile').mockImplementation(() => null);
 
     await generator(appTree, options);
 
@@ -40,7 +40,7 @@ describe('check generator', () => {
 
   it('should update package.json when requested', async () => {
     const options: CheckGeneratorSchema = { fix: true };
-    const spy = jest.spyOn(devkit, 'removeDependenciesFromPackageJson').mockImplementation(() => null);
+    const spy = vitest.spyOn(devkit, 'removeDependenciesFromPackageJson').mockImplementation(() => null);
 
     await generator(appTree, options);
 

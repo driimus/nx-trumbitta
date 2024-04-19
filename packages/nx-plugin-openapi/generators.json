@@ -6,7 +6,7 @@
     "init": {
       "factory": "./src/generators/init/generator",
       "schema": "./src/generators/init/schema.json",
-      "description": "Initialize the @trumbitta/nx-plugin-openapi plugin",
+      "description": "Initialize the @driimus/nx-plugin-openapi plugin",
       "aliases": ["ng-add"],
       "hidden": true
     },

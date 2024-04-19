@@ -1,6 +1,6 @@
 // Nrwl
-import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
-import { Tree, readProjectConfiguration } from '@nrwl/devkit';
+import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
+import { Tree, readProjectConfiguration } from '@nx/devkit';
 
 // Generator
 import libraryGenerator from './generator';
@@ -13,7 +13,7 @@ describe('api-spec schematic', () => {
   const defaultSchema: ApiSpecGeneratorSchema = { name: 'test' };
 
   beforeEach(() => {
-    appTree = createTreeWithEmptyWorkspace(2);
+    appTree = createTreeWithEmptyWorkspace();
   });
 
   describe('not nested', () => {

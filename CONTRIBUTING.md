@@ -2,7 +2,7 @@
 
 Thank you, thank you so much 🙏 for your interest in contributing to this repository!
 
-This is a container of [@nrwl/nx](https://nx.dev) plugins I decided or needed to write.  
+This is a container of [nx](https://nx.dev) plugins I decided or needed to write.  
 At the time of writing, the only available plugin is [`nx-plugin-openapi`](packages/nx-plugin-openapi).
 
 ## Which kind of contributions can I... contribute?

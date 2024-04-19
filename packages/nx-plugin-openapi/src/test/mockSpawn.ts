@@ -1,18 +1,18 @@
 import { spawn } from 'child_process';
-import EventEmitter from 'events';
+import * as EventEmitter from 'events';
 
 export function mockSpawn(
   ...invocations: { command: string; args: string[]; stdout?: string; stderr?: string; exitCode: number }[]
 ) {
-  const mock = spawn as jest.Mock;
+  const mock = spawn as vitest.Mock;
   for (const invocation of invocations) {
     mock.mockImplementationOnce((command: string, args: string[], options: { stdio: 'ignore' | 'pipe' }) => {
       expect([command, ...args]).toEqual([invocation.command, ...invocation.args]);
 
       const child: any = new EventEmitter();
       child.stdin = new EventEmitter();
-      child.stdin.write = jest.fn();
-      child.stdin.end = jest.fn();
+      child.stdin.write = vitest.fn();
+      child.stdin.end = vitest.fn();
       if (options.stdio !== 'ignore') {
         child.stdout = new EventEmitter();
         child.stderr = new EventEmitter();

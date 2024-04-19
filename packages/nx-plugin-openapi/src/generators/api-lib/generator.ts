@@ -1,13 +1,19 @@
 // Nrwl
 import {
-  addProjectConfiguration, formatFiles, generateFiles, GeneratorCallback,
+  addProjectConfiguration,
+  formatFiles,
+  generateFiles,
+  GeneratorCallback,
   getWorkspaceLayout,
-  joinPathFragments, names,
+  joinPathFragments,
+  names,
   offsetFromRoot,
   ProjectType,
-  readWorkspaceConfiguration, Tree, updateJson
-} from '@nrwl/devkit';
-import { runTasksInSerial } from '@nrwl/workspace/src/utilities/run-tasks-in-serial';
+  readNxJson,
+  runTasksInSerial,
+  Tree,
+  updateJson,
+} from '@nx/devkit';
 // Third Parties
 import { join } from 'path';
 import { GenerateApiLibSourcesExecutorSchema } from '../../executors/generate-api-lib-sources/schema';
@@ -15,9 +21,6 @@ import { GenerateApiLibSourcesExecutorSchema } from '../../executors/generate-ap
 import init from '../init/generator';
 // Schemas
 import { ApiLibGeneratorSchema } from './schema';
-
-
-
 
 const projectType: ProjectType = 'library';
 
@@ -59,10 +62,10 @@ function normalizeOptions(host: Tree, options: ApiLibGeneratorSchema): Normalize
   const name = names(options.name).fileName;
   const projectDirectory = options.directory ? `${names(options.directory).fileName}/${name}` : name;
   const projectName = projectDirectory.replace(new RegExp('/', 'g'), '-');
-  const { libsDir, npmScope } = getWorkspaceLayout(host);
+  const { libsDir, npmScope } = Object.assign({ npmScope: '' }, getWorkspaceLayout(host));
   const projectRoot = joinPathFragments(`${libsDir}/${projectDirectory}`);
 
-  const workspaceLayout = readWorkspaceConfiguration(host).workspaceLayout ?? { libsDir: 'libs' };
+  const workspaceLayout = readNxJson(host)?.workspaceLayout ?? { libsDir: 'libs' };
   const projectRootApiSpecLib =
     !options.isRemoteSpec && options.sourceSpecLib ? `${workspaceLayout.libsDir}/${options.sourceSpecLib}` : undefined;
   const parsedTags = options.tags ? options.tags.split(',').map((s) => s.trim()) : [];
@@ -82,9 +85,9 @@ function normalizeOptions(host: Tree, options: ApiLibGeneratorSchema): Normalize
 const getExecutorOptions = (options: NormalizedSchema): GenerateApiLibSourcesExecutorSchema => {
   const executorOptions: GenerateApiLibSourcesExecutorSchema = {
     useDockerBuild: options.useDockerBuild,
-    generator: options.generator,
+    generator: options.generator!,
     sourceSpecPathOrUrl: options.isRemoteSpec
-      ? options.sourceSpecUrl
+      ? options.sourceSpecUrl!
       : [options.projectRootApiSpecLib, options.sourceSpecFileRelativePath].join('/'),
     additionalProperties: options.additionalProperties,
     globalProperties: options.globalProperties,
@@ -106,7 +109,7 @@ const addProject = (host: Tree, options: NormalizedSchema) => {
     projectType,
     targets: {
       'generate-sources': {
-        executor: '@trumbitta/nx-plugin-openapi:generate-api-lib-sources',
+        executor: '@driimus/nx-plugin-openapi:generate-api-lib-sources',
         options: executorOptions,
       },
     },
@@ -130,14 +133,14 @@ function updateTsConfig(host: Tree, options: NormalizedSchema): void {
     const compilerOptions = json.compilerOptions;
     compilerOptions.paths = compilerOptions.paths || {};
     delete compilerOptions.paths[options.name];
-    if (compilerOptions.paths[options.importPath]) {
+    if (compilerOptions.paths[options.importPath!]) {
       throw new Error(
         `You already have a library using the import path "${options.importPath}". Make sure to specify a unique one.`,
       );
     }
 
     const { libsDir } = getWorkspaceLayout(host);
-    compilerOptions.paths[options.importPath] = [`${libsDir}/${options.projectDirectory}/src/index.ts`];
+    compilerOptions.paths[options.importPath!] = [`${libsDir}/${options.projectDirectory}/src/index.ts`];
 
     return json;
   });

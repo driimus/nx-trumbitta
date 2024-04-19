@@ -1,17 +1,17 @@
 // Nrwl
 import {
-  Tree,
-  generateFiles,
-  formatFiles,
-  addProjectConfiguration,
   GeneratorCallback,
+  ProjectType,
+  Tree,
+  addProjectConfiguration,
+  formatFiles,
+  generateFiles,
   joinPathFragments,
   names,
   offsetFromRoot,
-  ProjectType,
-  readWorkspaceConfiguration,
-} from '@nrwl/devkit';
-import { runTasksInSerial } from '@nrwl/workspace/src/utilities/run-tasks-in-serial';
+  readNxJson,
+  runTasksInSerial,
+} from '@nx/devkit';
 
 // Schematics
 import init from '../init/generator';
@@ -55,7 +55,7 @@ function normalizeOptions(options: ApiSpecGeneratorSchema, tree: Tree): Normaliz
   const name = names(options.name).fileName;
   const projectDirectory = options.directory ? `${names(options.directory).fileName}/${name}` : name;
   const projectName = projectDirectory.replace(new RegExp('/', 'g'), '-');
-  const workspaceLayout = readWorkspaceConfiguration(tree).workspaceLayout ?? { libsDir: 'libs' };
+  const workspaceLayout = readNxJson(tree)?.workspaceLayout ?? { libsDir: 'libs' };
   const projectRoot = `${workspaceLayout.libsDir}/${projectDirectory}`;
   const parsedTags = options.tags ? options.tags.split(',').map((s) => s.trim()) : [];
 

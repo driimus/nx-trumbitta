@@ -1,16 +1,17 @@
 {
-  "root": "packages/nx-plugin-unused-deps-e2e",
+  "name": "nx-plugin-unused-deps-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "sourceRoot": "packages/nx-plugin-unused-deps-e2e/src",
-  "targets": {
-    "e2e": {
-      "executor": "@nrwl/nx-plugin:e2e",
-      "options": {
-        "target": "nx-plugin-unused-deps:build",
-        "jestConfig": "packages/nx-plugin-unused-deps-e2e/jest.config.js"
-      }
-    }
-  },
   "tags": [],
-  "implicitDependencies": ["nx-plugin-unused-deps"]
+  "implicitDependencies": ["nx-plugin-unused-deps"],
+  "targets": {
+    "test": {
+      "executor": "@nx/vite:test",
+      "options": {
+        "config": "packages/nx-plugin-unused-deps-e2e/vitest.config.mts"
+      },
+      "dependsOn": ["nx-plugin-unused-deps:build"]
+    }
+  }
 }

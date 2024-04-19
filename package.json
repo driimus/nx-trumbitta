@@ -1,75 +1,59 @@
 {
-  "name": "trumbitta",
-  "version": "0.0.0-semantically-released",
+  "name": "root",
+  "private": true,
   "license": "MIT",
   "scripts": {
-    "nx": "nx",
-    "start": "nx serve",
-    "build": "nx build",
-    "test": "nx test",
     "lint": "nx workspace-lint && nx lint",
-    "e2e": "nx e2e",
-    "affected:apps": "nx affected:apps",
-    "affected:libs": "nx affected:libs",
-    "affected:build": "nx affected:build",
-    "affected:e2e": "nx affected:e2e",
-    "affected:test": "nx affected:test",
-    "affected:lint": "nx affected:lint",
-    "affected:dep-graph": "nx affected:dep-graph",
-    "affected": "nx affected",
     "format": "nx format:write",
-    "format:write": "nx format:write",
-    "format:check": "nx format:check",
     "update": "nx migrate latest",
-    "dep-graph": "nx dep-graph",
-    "help": "nx help",
     "semantic-release": "semantic-release",
-    "workspace-generator": "nx workspace-generator"
-  },
-  "private": true,
-  "dependencies": {
-    "cross-spawn": "^7.0.3",
-    "open": "^8.4.0",
-    "tslib": "^2.0.0"
+    "prepare": "husky"
   },
   "devDependencies": {
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
-    "@nrwl/cli": "13.0.1",
-    "@nrwl/devkit": "13.0.1",
-    "@nrwl/eslint-plugin-nx": "13.0.1",
-    "@nrwl/jest": "13.0.1",
-    "@nrwl/node": "13.0.1",
-    "@nrwl/nx-cloud": "12.5.0",
-    "@nrwl/nx-plugin": "13.0.1",
-    "@nrwl/tao": "13.0.1",
-    "@nrwl/workspace": "13.0.1",
+    "@nx/devkit": "18.3.2",
+    "@nx/eslint": "^18.3.2",
+    "@nx/eslint-plugin": "18.3.2",
+    "@nx/js": "18.3.2",
+    "@nx/node": "18.3.2",
+    "@nx/plugin": "18.3.2",
+    "@nx/vite": "^18.3.2",
+    "@nx/web": "18.3.2",
+    "@nx/workspace": "18.3.2",
     "@octokit/core": "^3.2.1",
     "@semantic-release/changelog": "^5.0.1",
     "@semantic-release/commit-analyzer": "^8.0.1",
     "@semantic-release/git": "^9.0.0",
     "@semantic-release/github": "^7.1.1",
     "@semantic-release/release-notes-generator": "^9.0.1",
+    "@swc-node/register": "~1.8.0",
+    "@swc/cli": "~0.1.62",
+    "@swc/core": "~1.3.85",
+    "@swc/helpers": "~0.5.2",
+    "@tsconfig/node20": "^20.1.4",
     "@types/cross-spawn": "^6.0.2",
-    "@types/jest": "27.0.2",
-    "@types/node": "14.14.33",
+    "@types/jest": "^29.4.0",
+    "@types/node": "18.16.9",
     "@types/nodegit": "^0.27.3",
-    "@typescript-eslint/eslint-plugin": "~4.28.5",
-    "@typescript-eslint/parser": "~4.28.5",
+    "@typescript-eslint/eslint-plugin": "~7.7.0",
+    "@typescript-eslint/parser": "~7.7.0",
+    "@vitest/coverage-v8": "^1.0.4",
+    "@vitest/ui": "^1.3.1",
     "conventional-changelog-conventionalcommits": "^4.5.0",
+    "cross-spawn": "^7.0.3",
     "cz-conventional-changelog": "^3.3.0",
-    "dotenv": "10.0.0",
-    "eslint": "7.22.0",
-    "eslint-config-prettier": "8.1.0",
-    "husky": "^4.3.0",
-    "jest": "27.2.3",
-    "prettier": "2.3.2",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "9.1.0",
+    "husky": "^9.0.11",
+    "nx": "18.3.2",
+    "prettier": "^2.6.2",
+    "rimraf": "^5.0.5",
     "semantic-release": "^17.4.4",
-    "ts-jest": "27.0.5",
-    "ts-node": "~9.1.1",
-    "tslib": "^2.0.0",
-    "tslint": "6.1.3",
-    "typescript": "4.3.5"
+    "tslib": "^2.3.0",
+    "typescript": "~5.4.2",
+    "vite": "~5.0.0",
+    "vitest": "^1.5.0"
   },
   "peerDependencies": {
     "@octokit/core": "^3.2.1"
@@ -84,11 +68,6 @@
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
-    }
-  },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
   "release": {
@@ -129,5 +108,6 @@
     ],
     "success": false,
     "fail": false
-  }
+  },
+  "packageManager": "pnpm@9.0.4+sha256.caa915eaae9d9aefccf50ee8aeda25a2f8684d8f9d5c6e367eaf176d97c1f89e"
 }

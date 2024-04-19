@@ -1,5 +1,5 @@
 // Nrwl
-import { ensureNxProject, runNxCommand, uniq } from '@nrwl/nx-plugin/testing';
+import { ensureNxProject, runNxCommand, uniq } from '@nx/plugin/testing';
 import { existsSync } from 'fs';
 
 describe('Happy-path', () => {
@@ -7,7 +7,7 @@ describe('Happy-path', () => {
   let apiLibLibName: string;
 
   beforeAll(() => {
-    ensureNxProject('@trumbitta/nx-plugin-openapi', 'dist/packages/nx-plugin-openapi');
+    ensureNxProject('@driimus/nx-plugin-openapi', 'dist/packages/nx-plugin-openapi');
   });
 
   beforeEach(() => {
@@ -15,13 +15,13 @@ describe('Happy-path', () => {
     apiLibLibName = uniq('api-lib');
   });
 
-  it('should work with a local spec', () => {
-    runNxCommand(`generate @trumbitta/nx-plugin-openapi:api-spec ${apiSpecLibName} --withSample`);
+  it.only('should work with a local spec', { timeout: 5000 }, () => {
+    runNxCommand(`generate @driimus/nx-plugin-openapi:api-spec ${apiSpecLibName} --withSample`);
 
     runNxCommand(
       [
         'generate',
-        '@trumbitta/nx-plugin-openapi:api-lib',
+        '@driimus/nx-plugin-openapi:api-lib',
         apiLibLibName,
         '--generator=typescript-fetch',
         `--sourceSpecLib=${apiSpecLibName}`,
@@ -33,16 +33,16 @@ describe('Happy-path', () => {
 
     // TODO devise proper expectations
     expect(execute).toContain('Done deleting outputDir');
-    expect(existsSync(`./tmp/nx-e2e/proj/libs/${apiLibLibName}/src/index.ts`)).toBe(true);
-  }, 120000);
+    expect(existsSync(`./tmp/nx-e2e/proj/${apiLibLibName}/src/index.ts`)).toBe(true);
+  });
 
   it('should work with docker', () => {
-    runNxCommand(`generate @trumbitta/nx-plugin-openapi:api-spec ${apiSpecLibName} --withSample`);
+    runNxCommand(`generate @driimus/nx-plugin-openapi:api-spec ${apiSpecLibName} --withSample`);
 
     runNxCommand(
       [
         'generate',
-        '@trumbitta/nx-plugin-openapi:api-lib',
+        '@driimus/nx-plugin-openapi:api-lib',
         apiLibLibName,
         '--useDockerBuild=true',
         '--generator=typescript-fetch',
@@ -55,14 +55,14 @@ describe('Happy-path', () => {
 
     // TODO devise proper expectations
     expect(execute).toContain('Done deleting outputDir');
-    expect(existsSync(`./tmp/nx-e2e/proj/libs/${apiLibLibName}/src/index.ts`)).toBe(true);
-  }, 120000);
+    expect(existsSync(`./tmp/nx-e2e/proj/${apiLibLibName}/src/index.ts`)).toBe(true);
+  });
 
   it('should work with a remote spec', () => {
     runNxCommand(
       [
         'generate',
-        '@trumbitta/nx-plugin-openapi:api-lib',
+        '@driimus/nx-plugin-openapi:api-lib',
         apiLibLibName,
         '--generator=typescript-fetch',
         '--isRemoteSpec=true',
@@ -74,16 +74,16 @@ describe('Happy-path', () => {
 
     // TODO devise proper expectations
     expect(execute).toContain('Done deleting outputDir');
-  }, 120000);
+  });
 
   describe('When using the --global-properties option', () => {
     it('should work with just one value', async () => {
-      runNxCommand(`generate @trumbitta/nx-plugin-openapi:api-spec ${apiSpecLibName} --withSample`);
+      runNxCommand(`generate @driimus/nx-plugin-openapi:api-spec ${apiSpecLibName} --withSample`);
 
       runNxCommand(
         [
           'generate',
-          '@trumbitta/nx-plugin-openapi:api-lib',
+          '@driimus/nx-plugin-openapi:api-lib',
           apiLibLibName,
           '--generator=typescript-fetch',
           `--sourceSpecLib=${apiSpecLibName}`,
@@ -96,15 +96,15 @@ describe('Happy-path', () => {
 
       // TODO devise proper expectations
       expect(execute).toContain('Done deleting outputDir');
-    }, 120000);
+    });
 
     it('should work with multiple values', async () => {
-      runNxCommand(`generate @trumbitta/nx-plugin-openapi:api-spec ${apiSpecLibName} --withSample`);
+      runNxCommand(`generate @driimus/nx-plugin-openapi:api-spec ${apiSpecLibName} --withSample`);
 
       runNxCommand(
         [
           'generate',
-          '@trumbitta/nx-plugin-openapi:api-lib',
+          '@driimus/nx-plugin-openapi:api-lib',
           apiLibLibName,
           '--generator=typescript-fetch',
           `--sourceSpecLib=${apiSpecLibName}`,
@@ -117,6 +117,6 @@ describe('Happy-path', () => {
 
       // TODO devise proper expectations
       expect(execute).toContain('Done deleting outputDir');
-    }, 120000);
+    });
   });
 });

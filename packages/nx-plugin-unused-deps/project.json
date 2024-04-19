@@ -1,25 +1,25 @@
 {
-  "root": "packages/nx-plugin-unused-deps",
+  "name": "nx-plugin-unused-deps",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/nx-plugin-unused-deps/src",
   "projectType": "library",
+  "tags": [],
   "targets": {
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["packages/nx-plugin-unused-deps/**/*.ts"]
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/nx-plugin-unused-deps"],
+      "executor": "@nx/vite:test",
       "options": {
-        "jestConfig": "packages/nx-plugin-unused-deps/jest.config.js",
-        "passWithNoTests": true
+        "config": "packages/nx-plugin-unused-deps/vitest.config.mts"
       }
     },
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/nx-plugin-unused-deps",
@@ -52,6 +52,5 @@
         ]
       }
     }
-  },
-  "tags": []
+  }
 }

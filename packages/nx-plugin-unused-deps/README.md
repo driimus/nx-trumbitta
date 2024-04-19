@@ -1,7 +1,7 @@
 # Look for unused NPM dependencies in a Nx monorepo
 
-[![NPM Version](https://badge.fury.io/js/%40trumbitta%2Fnx-plugin-unused-deps.svg)](https://www.npmjs.com/@trumbitta/nx-plugin-unused-deps)
-[![License](https://img.shields.io/npm/l/@trumbitta/nx-plugin-unused-deps)]()
+[![NPM Version](https://badge.fury.io/js/%40trumbitta%2Fnx-plugin-unused-deps.svg)](https://www.npmjs.com/@driimus/nx-plugin-unused-deps)
+[![License](https://img.shields.io/npm/l/@driimus/nx-plugin-unused-deps)]()
 
 Check the dependency graph of your monorepo, looking for unused NPM packages.
 
@@ -14,7 +14,7 @@ Add it to your postinstall script, wire it up into the linting phase of your CI 
 ## 💡 How to install
 
 ```sh
-npm install -D @trumbitta/nx-plugin-unused-deps
+npm install -D @driimus/nx-plugin-unused-deps
 ```
 
 ## 🧰 Usage
@@ -22,13 +22,13 @@ npm install -D @trumbitta/nx-plugin-unused-deps
 ### Check for unused deps
 
 ```sh
-nx generate @trumbitta/nx-plugin-unused-deps:check --no-interactive
+nx generate @driimus/nx-plugin-unused-deps:check --no-interactive
 ```
 
 ### Log to JSON
 
 ```sh
-nx generate @trumbitta/nx-plugin-unused-deps:check --json --no-interactive
+nx generate @driimus/nx-plugin-unused-deps:check --json --no-interactive
 ```
 
 ### Fix the `package.json`
@@ -39,7 +39,7 @@ nx generate @trumbitta/nx-plugin-unused-deps:check --json --no-interactive
 > There could be something the dependency graph didn't catch for whatever reason.
 
 ```sh
-nx generate @trumbitta/nx-plugin-unused-deps:check --fix --no-interactive
+nx generate @driimus/nx-plugin-unused-deps:check --fix --no-interactive
 ```
 
 ## 🙏 Acknowledgements

@@ -25,4 +25,3 @@ jobs:
         shell: bash
         run: |
           npm run affected:test -- --base=remotes/origin/main
-          npm run affected:e2e -- --base=remotes/origin/main

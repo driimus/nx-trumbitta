@@ -1,15 +1,18 @@
 {
-  "name": "@trumbitta/nx-plugin-openapi",
+  "name": "@driimus/nx-plugin-openapi",
   "version": "0.0.0-semantically-released",
   "main": "src/index.js",
   "generators": "./generators.json",
   "executors": "./executors.json",
   "license": "MIT",
   "peerDependencies": {
-    "@nrwl/workspace": ">=13.0.0"
+    "@nx/workspace": ">=13.0.0"
   },
   "keywords": [
     "Nx",
     "OpenAPI"
-  ]
+  ],
+  "devDependencies": {
+    "vitest": "^1.5.0"
+  }
 }

@@ -1,22 +1,21 @@
-jest.mock('child_process');
-jest.mock('@nrwl/devkit');
+vitest.mock('child_process');
+vitest.mock('@nx/devkit');
 
-import { logger } from '@nrwl/devkit';
-import { ExecutorContext } from '@nrwl/tao/src/shared/workspace';
+import { ExecutorContext, logger } from '@nx/devkit';
 import { mockSpawn } from '../../test/mockSpawn';
 import executor from './executor';
 import { GenerateApiLibSourcesExecutorSchema } from './schema';
 
 beforeEach(() => {
-  jest.resetAllMocks();
+  vitest.resetAllMocks();
 });
 
 describe('Command Runner Builder', () => {
   let context: (dir: string) => ExecutorContext;
   let schema: GenerateApiLibSourcesExecutorSchema;
   let dockerSchema: GenerateApiLibSourcesExecutorSchema;
-  logger.log = jest.fn();
-  logger.error = jest.fn();
+  logger.log = vitest.fn();
+  logger.error = vitest.fn();
 
   beforeEach(async () => {
     schema = {

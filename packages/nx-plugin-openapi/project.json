@@ -1,24 +1,24 @@
 {
-  "root": "packages/nx-plugin-openapi",
+  "name": "nx-plugin-openapi",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/nx-plugin-openapi/src",
   "projectType": "library",
+  "tags": [],
   "targets": {
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/eslint:lint",
       "options": {
         "lintFilePatterns": ["packages/nx-plugin-openapi/**/*.ts"]
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/nx-plugin-openapi"],
+      "executor": "@nx/vite:test",
       "options": {
-        "jestConfig": "packages/nx-plugin-openapi/jest.config.js",
-        "passWithNoTests": true
+        "configFile": "packages/nx-plugin-openapi/vitest.config.mts"
       }
     },
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/nx-plugin-openapi",
@@ -51,6 +51,5 @@
         ]
       }
     }
-  },
-  "tags": []
+  }
 }
