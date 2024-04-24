@@ -12,7 +12,7 @@ describe('check generator', () => {
   let appTree: Tree;
 
   beforeEach(() => {
-    appTree = createTreeWithEmptyWorkspace(2);
+    appTree = createTreeWithEmptyWorkspace();
     addDependenciesToPackageJson(appTree, { react: 'latest' }, { vitest: 'latest' });
   });
 
@@ -40,7 +40,7 @@ describe('check generator', () => {
 
   it('should update package.json when requested', async () => {
     const options: CheckGeneratorSchema = { fix: true };
-    const spy = vitest.spyOn(devkit, 'removeDependenciesFromPackageJson').mockImplementation(() => null);
+    const spy = vitest.spyOn(devkit, 'removeDependenciesFromPackageJson').mockImplementation(() => () => {});
 
     await generator(appTree, options);
 
