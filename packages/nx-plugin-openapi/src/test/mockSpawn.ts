@@ -1,13 +1,25 @@
 import { spawn } from 'child_process';
-import * as EventEmitter from 'events';
+import EventEmitter from 'node:events';
+import { Mock, vi, vitest } from 'vitest';
+
+const mock = vi.fn();
+vi.mock('cross-spawn', async (importOriginal) => {
+  const mod = await importOriginal<typeof import('cross-spawn')>();
+  return {
+    ...mod,
+    // replace some exports
+    spawn: mock,
+  };
+});
 
 export function mockSpawn(
   ...invocations: { command: string; args: string[]; stdout?: string; stderr?: string; exitCode: number }[]
 ) {
-  const mock = spawn as vitest.Mock;
   for (const invocation of invocations) {
     mock.mockImplementationOnce((command: string, args: string[], options: { stdio: 'ignore' | 'pipe' }) => {
       expect([command, ...args]).toEqual([invocation.command, ...invocation.args]);
+
+      console.log('ran');
 
       const child: any = new EventEmitter();
       child.stdin = new EventEmitter();

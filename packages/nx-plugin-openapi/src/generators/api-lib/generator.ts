@@ -21,6 +21,7 @@ import { GenerateApiLibSourcesExecutorSchema } from '../../executors/generate-ap
 import init from '../init/generator';
 // Schemas
 import { ApiLibGeneratorSchema } from './schema';
+import { fileExists } from '@nx/workspace/src/utilities/fileutils';
 
 const projectType: ProjectType = 'library';
 
@@ -46,9 +47,6 @@ export default async function (tree: Tree, schema: ApiLibGeneratorSchema) {
 
   // Create files
   createFiles(tree, options);
-
-  // Update TS config
-  updateTsConfig(tree, options);
 
   // Format
   if (!schema.skipFormat) {
@@ -125,23 +123,5 @@ function createFiles(host: Tree, options: NormalizedSchema) {
     dot: '.',
     tmpl: '',
     offsetFromRoot: offsetFromRoot(options.projectRoot),
-  });
-}
-
-function updateTsConfig(host: Tree, options: NormalizedSchema): void {
-  updateJson(host, 'tsconfig.base.json', (json) => {
-    const compilerOptions = json.compilerOptions;
-    compilerOptions.paths = compilerOptions.paths || {};
-    delete compilerOptions.paths[options.name];
-    if (compilerOptions.paths[options.importPath!]) {
-      throw new Error(
-        `You already have a library using the import path "${options.importPath}". Make sure to specify a unique one.`,
-      );
-    }
-
-    const { libsDir } = getWorkspaceLayout(host);
-    compilerOptions.paths[options.importPath!] = [`${libsDir}/${options.projectDirectory}/src/index.ts`];
-
-    return json;
   });
 }

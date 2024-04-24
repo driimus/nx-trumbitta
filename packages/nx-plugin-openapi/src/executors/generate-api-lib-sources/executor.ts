@@ -20,12 +20,12 @@ export default async function runExecutor(
   await generateSources(
     options.useDockerBuild ?? false,
     options.sourceSpecPathOrUrl,
-    options.sourceSpecUrlAuthorizationHeaders ?? '',
+    options.sourceSpecUrlAuthorizationHeaders,
     options.generator,
-    options.additionalProperties ?? '',
-    options.globalProperties ?? '',
-    options.typeMappings ?? '',
-    options.silent ?? true,
+    options.additionalProperties,
+    options.globalProperties,
+    options.typeMappings,
+    options.silent,
     outputDir,
   );
 
@@ -35,12 +35,12 @@ export default async function runExecutor(
 async function generateSources(
   useDockerBuild: boolean,
   apiSpecPathOrUrl: string,
-  apiSpecAuthorizationHeaders: string,
+  apiSpecAuthorizationHeaders: string | undefined,
   generator: string,
-  additionalProperties: string,
-  globalProperties: string,
-  typeMappings: string,
-  silent: boolean,
+  additionalProperties: string | undefined,
+  globalProperties: string | undefined,
+  typeMappings: string | undefined,
+  silent = false,
   outputDir: string,
 ): Promise<number> {
   mkdirSync(outputDir, { recursive: true });
