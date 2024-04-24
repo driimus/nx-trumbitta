@@ -8,10 +8,10 @@
   "targets": {
     "test": {
       "executor": "@nx/vite:test",
+      "outputs": ["{options.reportsDirectory}"],
       "options": {
-        "config": "packages/nx-plugin-openapi-e2e/vitest.config.mts"
-      },
-      "dependsOn": ["nx-plugin-openapi:build"]
+        "reportsDirectory": "../../coverage/packages/nx-plugin-openapi-e2e"
+      }
     }
   }
 }
