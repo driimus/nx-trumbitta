@@ -9,7 +9,7 @@
     "test": {
       "executor": "@nx/vite:test",
       "options": {
-        "config": "vitest.config.mts"
+        "config": "packages/nx-plugin-unused-deps-e2e/vitest.config.mts"
       },
       "dependsOn": ["nx-plugin-unused-deps:build"]
     }

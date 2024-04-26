@@ -13,10 +13,7 @@
       }
     },
     "test": {
-      "executor": "@nx/vite:test",
-      "options": {
-        "config": "packages/nx-plugin-unused-deps/vitest.config.mts"
-      }
+      "executor": "@nx/vite:test"
     },
     "build": {
       "executor": "@nx/js:tsc",

@@ -3,6 +3,9 @@
     "appsDir": "packages",
     "libsDir": "packages"
   },
+  "cli": {
+    "packageManager": "pnpm"
+  },
   "targetDependencies": {
     "build": [
       {

@@ -1,4 +1,10 @@
 {
     "extends": "@tsconfig/node20/tsconfig.json",
-    "exclude": ["node_modules", "tmp"]
+    "exclude": ["node_modules", "tmp"],
+    "compilerOptions": {
+        "paths": {
+            "@driimus/nx-plugin-openapi": ["./packages/nx-plugin-openapi/src/index.ts"],
+            "@driimus/nx-plugin-unused-deps": ["./packages/nx-plugin-unused-deps/src/index.ts"],
+        }
+    }
 }

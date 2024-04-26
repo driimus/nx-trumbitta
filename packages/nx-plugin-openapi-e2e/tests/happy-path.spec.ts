@@ -15,7 +15,7 @@ describe('Happy-path', () => {
     apiLibLibName = uniq('api-lib');
   });
 
-  it.only('should work with a local spec', { timeout: 5000 }, () => {
+  it('should work with a local spec', { timeout: 15000 }, () => {
     runNxCommand(`generate @driimus/nx-plugin-openapi:api-spec ${apiSpecLibName} --withSample`);
 
     runNxCommand(
