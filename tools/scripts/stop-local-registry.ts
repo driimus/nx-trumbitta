@@ -4,7 +4,6 @@
  */
 
 export default () => {
-  if (global.stopLocalRegistry) {
-    global.stopLocalRegistry();
-  }
+  // @ts-expect-error
+  global.stopLocalRegistry?.();
 };

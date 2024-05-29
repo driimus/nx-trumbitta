@@ -1,23 +1,23 @@
 // Nrwl
-import { Tree, readJson, updateJson, readProjectConfiguration } from '@nx/devkit';
+import { Tree, readJson, readProjectConfiguration, updateJson } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 
 // Generator
 import libraryGenerator from './generator';
 
 // Schemas
-import { ApiLibGeneratorSchema } from './schema';
 import { GenerateApiLibSourcesExecutorSchema } from '../../executors/generate-api-lib-sources/schema';
+import { ApiLibGeneratorSchema } from './schema';
 
 describe('api-lib schematic', () => {
   let appTree: Tree;
 
-  const defaultSchema: ApiLibGeneratorSchema = {
+  const defaultSchema = {
     name: 'my-lib',
     isRemoteSpec: false,
     generator: 'typescript-fetch',
     skipFormat: true,
-  };
+  } satisfies ApiLibGeneratorSchema;
 
   beforeEach(async () => {
     appTree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
@@ -49,22 +49,22 @@ describe('api-lib schematic', () => {
 
     describe('When the API spec file is remote', () => {
       const sourceSpecUrl = 'http://foo.bar';
-      const remoteSchema: ApiLibGeneratorSchema = {
+      const remoteSchema = {
         ...defaultSchema,
         isRemoteSpec: true,
         sourceSpecUrl,
-      };
+      } satisfies ApiLibGeneratorSchema;
 
       it('should create or update project configuration', async () => {
         await libraryGenerator(appTree, remoteSchema);
-        const options: GenerateApiLibSourcesExecutorSchema = {
+        const options = {
           generator: remoteSchema.generator,
           sourceSpecPathOrUrl: sourceSpecUrl,
-        };
+        } satisfies GenerateApiLibSourcesExecutorSchema;
         const { root, targets } = readProjectConfiguration(appTree, defaultSchema.name);
 
         expect(root).toEqual(`libs/${remoteSchema.name}`);
-        expect(targets['generate-sources']).toMatchObject({
+        expect(targets?.['generate-sources']).toMatchObject({
           executor: '@driimus/nx-plugin-openapi:generate-api-lib-sources',
           options,
         });
@@ -79,12 +79,12 @@ describe('api-lib schematic', () => {
     });
 
     describe('When the API spec file is local', () => {
-      const localSchema: ApiLibGeneratorSchema = {
+      const localSchema = {
         ...defaultSchema,
         isRemoteSpec: false,
         sourceSpecLib: 'foo',
         sourceSpecFileRelativePath: 'src/bar.yml',
-      };
+      } satisfies ApiLibGeneratorSchema;
       it('should update workspace.json', async () => {
         await libraryGenerator(appTree, localSchema);
         const options: GenerateApiLibSourcesExecutorSchema = {
@@ -94,7 +94,7 @@ describe('api-lib schematic', () => {
         const { root, targets } = readProjectConfiguration(appTree, defaultSchema.name);
 
         expect(root).toEqual(`libs/${localSchema.name}`);
-        expect(targets['generate-sources']).toMatchObject({
+        expect(targets?.['generate-sources']).toMatchObject({
           executor: '@driimus/nx-plugin-openapi:generate-api-lib-sources',
           options,
         });
