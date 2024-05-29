@@ -1,6 +1,6 @@
 {
   "compileOnSave": false,
-  "extends": "@tsconfig/node20/tsconfig.json",
+  "extends": "@tsconfig/node-lts/tsconfig.json",
   "compilerOptions": {
     "rootDir": ".",
     "sourceMap": true,
