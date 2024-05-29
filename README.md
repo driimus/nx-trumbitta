@@ -2,7 +2,7 @@
 
 [![License](https://img.shields.io/npm/l/@driimus/nx-plugin-openapi)]()
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
-![CI](https://github.com/driimus/nx-trumbitta/workflows/test/badge.svg?event=push)
+[![Test](https://github.com/driimus/nx-trumbitta/actions/workflows/test.yml/badge.svg)](https://github.com/driimus/nx-trumbitta/actions/workflows/test.yml)
 
 ## Constituent packages
 

@@ -2,9 +2,6 @@
   "name": "root",
   "private": true,
   "license": "MIT",
-  "workspaces": [
-    "packages/*"
-  ],
   "scripts": {
     "update": "nx migrate latest",
     "prepare": "husky"
@@ -28,6 +25,7 @@
     "@swc/cli": "0.3.12",
     "@swc/core": "^1.4.17",
     "@swc/helpers": "~0.5.2",
+    "@tsconfig/node-lts": "^20.1.3",
     "@types/cross-spawn": "^6.0.6",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.12.7",
@@ -39,12 +37,13 @@
     "prettier": "^3.2.5",
     "ts-jest": "^29.1.2",
     "ts-node": "^10.9.2",
-    "tslib": "^2.3.0",
+    "type-fest": "^4.18.3",
     "typescript": "^5.4.5",
     "verdaccio": "^5.0.4"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/driimus/nx-trumbitta.git"
-  }
+  },
+  "packageManager": "pnpm@9.1.3+sha256.7f63001edc077f1cff96cacba901f350796287a2800dfa83fe898f94183e4f5f"
 }

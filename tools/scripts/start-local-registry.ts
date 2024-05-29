@@ -11,6 +11,7 @@ export default async () => {
   // storage folder for the local registry
   const storage = './tmp/local-registry/storage';
 
+  // @ts-expect-error
   global.stopLocalRegistry = await startLocalRegistry({
     localRegistryTarget,
     storage,

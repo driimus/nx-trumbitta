@@ -22,14 +22,17 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: setup node.js
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version-file: .node-version
-          cache: 'npm'
+          cache: 'pnpm'
           registry-url: 'https://registry.npmjs.org'
 
-      - run: npm ci
+      - run: pnpm i
 
       - name: Configure git author
         run: |
@@ -38,8 +41,8 @@ jobs:
 
       - name: Release
         run: |
-          npx nx run-many -t build
-          npx nx release -y
+          pnpm nx run-many -t build
+          pnpm nx release -y
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -8,7 +8,7 @@ export default async function runExecutor(
   options: GenerateApiLibSourcesExecutorSchema,
   context: ExecutorContext,
 ): Promise<{ success: boolean }> {
-  const outputDir = context.workspace.projects[context.projectName].sourceRoot;
+  const outputDir = context.workspace!.projects[context.projectName!].sourceRoot!;
   const root = context.root;
 
   logger.info(`Deleting outputDir ${outputDir}...`);
@@ -17,30 +17,22 @@ export default async function runExecutor(
 
   logger.info(`Done deleting outputDir ${outputDir}.`);
 
-  await generateSources(
-    options.useDockerBuild ?? false,
-    options.sourceSpecPathOrUrl,
-    options.sourceSpecUrlAuthorizationHeaders,
-    options.generator,
-    options.additionalProperties,
-    options.globalProperties,
-    options.typeMappings,
-    options.silent,
-    outputDir,
-  );
+  await generateSources(options, outputDir);
 
   return { success: true };
 }
 
 async function generateSources(
-  useDockerBuild: boolean,
-  apiSpecPathOrUrl: string,
-  apiSpecAuthorizationHeaders: string,
-  generator: string,
-  additionalProperties: string,
-  globalProperties: string,
-  typeMappings: string,
-  silent: boolean,
+  {
+    useDockerBuild,
+    sourceSpecPathOrUrl,
+    sourceSpecUrlAuthorizationHeaders,
+    generator,
+    additionalProperties,
+    globalProperties,
+    typeMappings,
+    silent,
+  }: GenerateApiLibSourcesExecutorSchema,
   outputDir: string,
 ): Promise<number> {
   mkdirSync(outputDir, { recursive: true });
@@ -53,14 +45,14 @@ async function generateSources(
         }
       : { command: 'npx', args: ['openapi-generator-cli'] };
 
-    args.push('generate', '-i', apiSpecPathOrUrl, '-g', generator, '-o', outputDir);
+    args.push('generate', '-i', sourceSpecPathOrUrl, '-g', generator, '-o', outputDir);
 
     if (additionalProperties) {
       args.push('--additional-properties', additionalProperties);
     }
 
-    if (apiSpecAuthorizationHeaders) {
-      args.push('--auth', apiSpecAuthorizationHeaders);
+    if (sourceSpecUrlAuthorizationHeaders) {
+      args.push('--auth', sourceSpecUrlAuthorizationHeaders);
     }
 
     if (typeMappings) {

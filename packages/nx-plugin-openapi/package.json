@@ -25,5 +25,8 @@
   "homepage": "https://github.com/driimus/nx-trumbitta/blob/main/packages/nx-plugin-openapi#readme",
   "bugs": {
     "url": "https://github.com/driimus/nx-trumbitta/issues"
+  },
+  "dependencies": {
+    "tslib": "^2.6.2"
   }
 }

@@ -1,4 +1,3 @@
-// Nrwl
 import {
   addProjectConfiguration,
   formatFiles,
@@ -15,17 +14,15 @@ import {
   Tree,
   updateJson,
 } from '@nx/devkit';
-// Third Parties
 import { join } from 'path';
+import type { SetRequired } from 'type-fest';
 import { GenerateApiLibSourcesExecutorSchema } from '../../executors/generate-api-lib-sources/schema';
-// Schematics
 import init from '../init/generator';
-// Schemas
 import { ApiLibGeneratorSchema } from './schema';
 
 const projectType: ProjectType = 'library';
 
-interface NormalizedSchema extends ApiLibGeneratorSchema {
+interface NormalizedSchema extends SetRequired<ApiLibGeneratorSchema, 'importPath' | 'generator'> {
   projectName: string;
   projectRoot: string;
   projectRootApiSpecLib?: string;
@@ -33,7 +30,7 @@ interface NormalizedSchema extends ApiLibGeneratorSchema {
   parsedTags: string[];
 }
 
-export default async function (tree: Tree, schema: ApiLibGeneratorSchema) {
+export default async function (tree: Tree, schema: SetRequired<ApiLibGeneratorSchema, 'generator'>) {
   const tasks: GeneratorCallback[] = [];
 
   const options = normalizeOptions(tree, schema);
@@ -59,14 +56,14 @@ export default async function (tree: Tree, schema: ApiLibGeneratorSchema) {
   return runTasksInSerial(...tasks);
 }
 
-function normalizeOptions(host: Tree, options: ApiLibGeneratorSchema): NormalizedSchema {
+function normalizeOptions(host: Tree, options: SetRequired<ApiLibGeneratorSchema, 'generator'>): NormalizedSchema {
   const name = names(options.name).fileName;
   const projectDirectory = options.directory ? `${names(options.directory).fileName}/${name}` : name;
   const projectName = projectDirectory.replace(new RegExp('/', 'g'), '-');
   const { libsDir, npmScope } = Object.assign({ npmScope: '' }, getWorkspaceLayout(host));
   const projectRoot = joinPathFragments(`${libsDir}/${projectDirectory}`);
 
-  const workspaceLayout = readNxJson(host).workspaceLayout ?? { libsDir: 'libs' };
+  const workspaceLayout = readNxJson(host)?.workspaceLayout ?? { libsDir: 'libs' };
   const projectRootApiSpecLib =
     !options.isRemoteSpec && options.sourceSpecLib ? `${workspaceLayout.libsDir}/${options.sourceSpecLib}` : undefined;
   const parsedTags = options.tags ? options.tags.split(',').map((s) => s.trim()) : [];
@@ -88,7 +85,7 @@ const getExecutorOptions = (options: NormalizedSchema): GenerateApiLibSourcesExe
     useDockerBuild: options.useDockerBuild,
     generator: options.generator,
     sourceSpecPathOrUrl: options.isRemoteSpec
-      ? options.sourceSpecUrl
+      ? options.sourceSpecUrl!
       : [options.projectRootApiSpecLib, options.sourceSpecFileRelativePath].join('/'),
     additionalProperties: options.additionalProperties,
     globalProperties: options.globalProperties,
